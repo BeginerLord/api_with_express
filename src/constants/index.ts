@@ -1,3 +1,3 @@
 export * from './constants';
-export * from './requestMethods';
+export * from './collections';
 export * from './routes';
