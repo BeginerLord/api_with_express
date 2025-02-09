@@ -4,18 +4,23 @@ import express from "express";
 import { handleNotFound } from "./routes";
 import router from "./routes/routes";
 import { setHeaders } from "./headers";
-import { initMongoose } from "./database";
 import { URL_DATABASE } from "@/constants";
 import { corsConfig } from "./cors";
+import { initDataSources } from "./database";
 
 dotenv.config();
 
 const app = express();
 
 // Coneccion a la base de datos
+// Inicialización de fuentes de datos
 (async () => {
-    await initMongoose({ mongoUrl: URL_DATABASE});
-  })();
+  await initDataSources({
+    mongoose: { mongoUrl: URL_DATABASE },
+    // postgres: { connectionString: POSTGRES_CONNECTION_STRING },
+    // redis: { url: REDIS_URL }
+  });
+})();
 
 app.use(express.json());
 app.use(express.urlencoded({ limit: "1mb", extended: true }));
