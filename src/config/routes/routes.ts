@@ -1,9 +1,6 @@
+import userRoutes from "@/controllers/user/user.routes";
 import { Router } from "express";
 
 const router = Router();
-
-router.use("/oauth", )
-router.use("/auth", );
-router.use("/user", );
-
+router.use("/user", userRoutes);
 export default router;
