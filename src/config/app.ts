@@ -22,6 +22,9 @@ const app = express();
   });
 })();
 
+// Analiza cuerpos de solicitudes con datos codificados en URL (application/x-www-form-urlencoded)
+// 'limit' establece el tamaño máximo del cuerpo de la solicitud a 1MB
+// 'extended: true' permite analizar objetos anidados y matrices utilizando la biblioteca 'qs'
 app.use(express.json());
 app.use(express.urlencoded({ limit: "1mb", extended: true }));
 
@@ -34,7 +37,7 @@ app.use(errorGlobalHandler);
 app.disable("x-powered-by");
 
 // Rutes
-app.use("/api", router);
+app.use("/api/v1", router);
 app.use("*", handleNotFound);
 
 export default app;

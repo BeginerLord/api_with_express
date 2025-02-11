@@ -3,7 +3,7 @@ import { OAuth2Client } from "google-auth-library";
 
 dotenv.config();
 
-export const PORT = process.env.PORT || ("8080" as string);
+export const PORT = parseInt(process.env.PORT || "8080", 10);
 export const HOST = "0.0.0.0";
 export const URL_DATABASE =
   process.env.URL_DATABASE || ("url of your data base" as string);
