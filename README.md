@@ -150,6 +150,100 @@ export default connectDB;
 
 En `src/index.ts`, importa y ejecuta `connectDB()` antes de iniciar el servidor.
 
+Para agregar Swagger a un proyecto de Express con TypeScript, puedes seguir estos pasos:
+
+1. **Instala las dependencias necesarias**:
+   Abre tu terminal y ejecuta los siguientes comandos para instalar `swagger-ui-express` y `swagger-jsdoc`:
+
+   ```bash
+   npm install swagger-ui-express swagger-jsdoc
+   ```
+
+2. **Configura Swagger en tu proyecto**:
+   Crea un archivo `swagger.ts` para configurar Swagger. Por ejemplo:
+
+   ```typescript
+   // filepath: /path/to/swagger.ts
+   import swaggerJSDoc from 'swagger-jsdoc';
+   import swaggerUi from 'swagger-ui-express';
+   import { Express } from 'express';
+
+   const options = {
+       definition: {
+           openapi: '3.0.0',
+           info: {
+               title: 'My API',
+               version: '1.0.0',
+           },
+       },
+       apis: ['./src/routes/*.ts'], // Ruta a tus archivos de rutas
+   };
+
+   const swaggerSpec = swaggerJSDoc(options);
+
+   export const setupSwagger = (app: Express) => {
+       app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+   };
+   ```
+
+3. **Integra Swagger en tu aplicación Express**:
+   Modifica tu archivo principal de la aplicación (por ejemplo, `app.ts` o `index.ts`) para usar la configuración de Swagger:
+
+   ```typescript
+   // filepath: /path/to/app.ts
+   import express from 'express';
+   import { setupSwagger } from './swagger';
+
+   const app = express();
+
+   // ...existing middleware and routes...
+
+   // Setup Swagger
+   setupSwagger(app);
+
+   const PORT = process.env.PORT || 3000;
+   app.listen(PORT, () => {
+       console.log(`Server is running on port ${PORT}`);
+   });
+   ```
+
+4. **Documenta tus endpoints**:
+   Agrega comentarios JSDoc en tus archivos de rutas para documentar tus endpoints. Por ejemplo:
+
+   ```typescript
+   // filepath: /path/to/src/routes/example.ts
+   import { Router, Request, Response } from 'express';
+
+   const router = Router();
+
+   /**
+    * @swagger
+    * /example:
+    *   get:
+    *     summary: Example endpoint
+    *     responses:
+    *       200:
+    *         description: A successful response
+    */
+   router.get('/example', (req: Request, res: Response) => {
+       res.send('This is an example endpoint');
+   });
+
+   export default router;
+   ```
+
+5. **Ejecuta tu aplicación**:
+   Ejecuta tu aplicación y navega a `http://localhost:<puerto>/api-docs` para ver la documentación generada por Swagger.
+
+
+
+Estos pasos te permitirán agregar Swagger a tu proyecto de Express con TypeScript y generar documentación interactiva para tu API.
+Instala las dependencias necesarias: Abre tu terminal y ejecuta los siguientes comandos para instalar swagger-ui-express y swagger-jsdoc:
+
+  ```sh
+    pnpm add -D @types/swagger-ui-express @types/swagger-jsdoc && pnpm add swagger-ui-express swagger-jsdoc
+   ```
+
 ## Conclusión
 
 Con estos pasos, has configurado un proyecto Express con TypeScript, soporte para variables de entorno y conexión a MongoDB. Puedes seguir expandiendo el proyecto añadiendo rutas, controladores y modelos según sea necesario.
