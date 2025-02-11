@@ -7,6 +7,7 @@ import { setHeaders } from "./headers";
 import { URL_DATABASE } from "@/constants";
 import { corsConfig } from "./cors";
 import { initDataSources } from "./database";
+import { setupSwagger } from "./swagger";
 
 dotenv.config();
 
@@ -30,6 +31,9 @@ app.use(express.urlencoded({ limit: "1mb", extended: true }));
 
 app.use(setHeaders);
 app.use(corsConfig());
+
+// Configura Swagger
+setupSwagger(app);
 
 // Middleware global para manejo de errores
 app.use(errorGlobalHandler);
