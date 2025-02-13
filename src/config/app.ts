@@ -4,7 +4,7 @@ import express from "express";
 import { handleNotFound } from "./routes";
 import router from "./routes/routes";
 import { setHeaders } from "./headers";
-import { URL_DATABASE } from "@/constants";
+import { HOST, PORT, URL_DATABASE } from "@/constants";
 import { corsConfig } from "./cors";
 import { initDataSources } from "./database";
 import { setupSwagger } from "./swagger";
@@ -44,4 +44,8 @@ app.disable("x-powered-by");
 app.use("/api/v1", router);
 app.use("*", handleNotFound);
 
+// Inicia el servidor
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
+});
 export default app;
