@@ -35,5 +35,6 @@ export const initMongoose = async ({ mongoUrl }: InitMongooseOptions = {}) => {
   // Conectamos a la base de datos utilizando la URL de conexión proporcionada.
   await mongoose.connect(connectionUrl, {
     autoIndex: true, // Habilitamos la creación de índices automáticamente.
+    serverSelectionTimeoutMS: 30000,
   });
 };
