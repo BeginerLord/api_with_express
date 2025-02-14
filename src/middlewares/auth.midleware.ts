@@ -1,7 +1,7 @@
 import { getModel } from "@/config/database";
 import { Collection } from "@/constants";
 import { UserSchemaMongo } from "@/entities";
-import { generateToken } from "@/security";
+import { verifyToken } from "@/security";
 import { setError } from "@/utils/errors";
 import { RequestHandler } from "express";
 
@@ -10,22 +10,31 @@ export const authorize: RequestHandler = async (req, _res, next) => {
     const model = getModel(Collection.USERS, UserSchemaMongo);
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) return next(setError(401, "Not authorized"));
+    if (!authHeader) {
+      return next(setError(401, "Not authorized"));
+    }
 
-    const token = authHeader.split(' ')[1];
+    const token = extractToken(authHeader);
 
-    const validateToken = generateToken(token);
+    const validateToken = verifyToken(token);
 
-    if (!validateToken || !validateToken.uuid)
+    if (!validateToken || !validateToken.uuid) {
       return next(setError(401, "Not authorized - invalid token"));
+    }
 
     const user = await model.findOne({ uuid: validateToken.uuid });
-    if (!user) return next(setError(404, "User not found"));
+    if (!user) {
+      return next(setError(404, "User not found"));
+    }
 
     (req as any).user = user;
 
     next();
   } catch (error) {
-    return next(setError(401, `Not authorized -> ${error}`));
+    return next(setError(401, `Not authorized -> ${(error as Error).message}`));
   }
+};
+
+const extractToken = (authHeader: string): string => {
+  return authHeader.split(' ')[1];
 };
