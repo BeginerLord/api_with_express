@@ -1,10 +1,11 @@
 import { getModel } from "@/config/database";
 import { Collection } from "@/constants";
 import { User, UserSchemaMongo } from "@/entities";
-import { decodeToken } from "@/security";
+import { verifyToken } from "@/security";
+
 
 export const getUserProfile = async (token: string): Promise<User | Error> => {
-    const decodedUser = decodeToken(token);
+    const decodedUser = verifyToken(token);
     if (!decodedUser) {
       return new Error("Token no válido");
     }

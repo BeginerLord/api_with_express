@@ -1,5 +1,4 @@
 import { TOKEN_SECRET_KEY } from "@/constants";
-import { User } from "@/entities";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "./TokenPayload";
 
