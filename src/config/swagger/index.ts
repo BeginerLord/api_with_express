@@ -11,7 +11,7 @@ const options = {
             version: '1.0.0',
         },
     },
-    apis: ['./src/config/routes/routes.ts'], // Ruta a tus archivos de rutas
+    apis: ['./src/controllers/user/user.routes.ts'], // Ruta a tus archivos de rutas
 };
 
 const swaggerSpec = swaggerJSDoc(options);
