@@ -1,14 +1,9 @@
-import { Base } from "@/entities/common";
+import { Base, RolType } from "@/entities/common";
 
 export interface User extends Base {
-    name: string;
-    phone: number;
-    password: string;
-    rol: string;
-    photo: string;
-    university: string;
-    code_university: string;
-    city: string;
-    address?: string;
-    email: string;
+  uuid: string;
+  name: string;
+  email: string;
+  password: string;
+  rol?: RolType;
   } 
