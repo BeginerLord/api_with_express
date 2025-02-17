@@ -1,6 +1,6 @@
 import { getModel } from "@/config/database";
 import { Collection } from "@/constants";
-import { createUserDto, User, UserSchemaMongo } from "@/entities";
+import { createUserDto, RolType, User, UserSchemaMongo } from "@/entities";
 import { generateToken, TokenPayload } from "@/security";
 import { setError } from "@/utils/errors";
 import bcrypt from "bcrypt";
@@ -17,6 +17,7 @@ export const Signup = async (
   const newUser = new model({
     ...data,
     password: newPassword,
+    rol: RolType.USERNOTES // Asigna el rol predeterminado
   }) as typeof model.prototype;
   await newUser.save();
   const tokenPayload: TokenPayload = {
