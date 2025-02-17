@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { signupController } from "./user.controllers";
+import { ROUTES } from "@/constants";
 
 const userRoutes = Router();
 
 /**
  * @swagger
- * /user/signup:
+ * /api/v1/user/signup:
  *   post:
  *     summary: Register a new user
  *     tags: [User]
@@ -27,6 +28,6 @@ const userRoutes = Router();
  *         description: Bad request
  */
 
-userRoutes.post("/signup", signupController);
+userRoutes.post(ROUTES.PUBLIC.REGISTER, signupController);
 
 export default userRoutes;

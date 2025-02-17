@@ -11,4 +11,4 @@ export interface User extends Base {
     city: string;
     address?: string;
     email: string;
-  }
+  } 

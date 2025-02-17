@@ -1,6 +1,6 @@
 export const ROUTES = {
     PUBLIC: {
-      REGISTER: '/singup',
+      REGISTER: '/signup',
       LOGIN: '/login'
     },
     PRIVATE: {
