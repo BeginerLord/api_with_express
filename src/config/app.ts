@@ -8,10 +8,15 @@ import { HOST, PORT, URL_DATABASE } from "@/constants";
 import { corsConfig } from "./cors";
 import { initDataSources } from "./database";
 import { setupSwagger } from "./swagger";
+import morgan from "morgan";
 
 dotenv.config();
 
 const app = express();
+
+
+// Configura morgan para registrar las solicitudes HTTP
+app.use(morgan("dev"));
 
 // Coneccion a la base de datos
 // Inicialización de fuentes de datos
