@@ -9,6 +9,7 @@ export const UserSchemaMongo = new Schema<User>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     status: { type: String, default: StatusType.ACTIVE },
+    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }], // Referencia a las notas del usuario
     rol: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

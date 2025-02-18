@@ -6,4 +6,5 @@ export interface User extends Base {
   email: string;
   password: string;
   rol?: RolType;
+  notes?: string[]; // Referencia a las notas del usuario
   } 
