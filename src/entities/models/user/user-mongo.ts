@@ -25,3 +25,4 @@ UserSchemaMongo.methods.toJSON = function () {
   user.uuid = _id;
   return user;
 };
+
