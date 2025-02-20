@@ -1,5 +1,6 @@
 export enum Collection{
-    USERS = 'users'
+    USERS = 'users',
+    NOTES= 'notes',
 }
 
 export enum RequestMethods {
