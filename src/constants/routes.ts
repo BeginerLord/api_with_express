@@ -4,6 +4,6 @@ export const ROUTES = {
       LOGIN: '/login'
     },
     PRIVATE: {
-      USER: '/:notes'
+      USER: '/notes'
     }
   }

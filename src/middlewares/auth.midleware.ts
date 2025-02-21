@@ -35,14 +35,7 @@ export const authorize: RequestHandler = async (req, _res, next) => {
   }
 };
 
-export const authorizeRoles = (...allowedRoles: RolType[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    if (!allowedRoles.includes((req as any).user.rol)) {
-      return res.status(403).send({ error: "Access denied" });
-    }
-    next();
-  };
-};
+
 
 const extractToken = (authHeader: string): string => {
   return authHeader.split(" ")[1];
