@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
 import { User } from "./user";
 import { StatusType } from "@/entities/common";
+import crypto from "crypto"; 
 
 export const UserSchemaMongo = new Schema<User>(
   {

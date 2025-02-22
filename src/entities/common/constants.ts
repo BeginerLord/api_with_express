@@ -7,5 +7,5 @@ export const enum StatusType {
   
   export const enum RolType {
     USERNOTES = "usernotes",
-    INVITED= "invaited"
+    INVITED= "invited"
   }

@@ -1,29 +1,21 @@
-import { getModel } from "@/config/database";
-import { Collection } from "@/constants";
-import { createUserDto, RolType, User, UserSchemaMongo } from "@/entities";
-import { generateToken, TokenPayload } from "@/security";
-import { setError } from "@/utils/errors";
-import bcrypt from "bcrypt";
+import { createUserDto, RolType } from "@/entities";
+import { checkUserExists, createToken, createUser } from "@/services";
 
 export const Signup = async (
   data: createUserDto
 ): Promise<{ token: string } | Error> => {
-  const model = await getModel(Collection.USERS, UserSchemaMongo);
-  const user = (await model.findOne({ email: data.email })) as User;
-  if (user) {
-    return setError(400, "El usuario ya existe");
+  try {
+    await checkUserExists(data.email);
+
+    const newUser = await createUser({
+      ...data,
+      rol: RolType.USERNOTES, // Asigna el rol predeterminado
+    });
+
+    const token = createToken(newUser);
+    return { token };
+  } catch (error) {
+    console.error("Error signing up:", error);
+    throw error;
   }
-  const newPassword = await bcrypt.hashSync(data.password || "", 10);
-  const newUser = new model({
-    ...data,
-    password: newPassword,
-    rol: RolType.USERNOTES // Asigna el rol predeterminado
-  }) as typeof model.prototype;
-  await newUser.save();
-  const tokenPayload: TokenPayload = {
-    uuid: newUser._id.toString(),
-    email: newUser.email as string,
-  };
-  const token = generateToken(tokenPayload);
-  return { token };
 };
