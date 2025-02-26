@@ -13,3 +13,7 @@ export const signupController: RequestHandler = async (req: Request, res: Respon
     next(error); // Pasa el error al middleware de manejo de errores
   }
 };
+
+export const signingController: RequestHandler = async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
+ 
+}

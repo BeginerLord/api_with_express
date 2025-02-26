@@ -5,6 +5,7 @@ class CustomError extends Error {
       super(message);
       this.status = status;
       Object.setPrototypeOf(this, CustomError.prototype) // Restaurar el prototipo correcto para asegurar instanceof
+      Error.captureStackTrace(this, this.constructor); // Capturar stack trace
     }
   }
   
