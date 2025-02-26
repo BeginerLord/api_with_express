@@ -1,19 +1,27 @@
-import { Signup } from "@/bussines-logic/user";
-import { Request, Response, NextFunction, RequestHandler } from "express";
+import { Signin, Signup } from "@/bussines-logic";
+import { asyncHandler, setError } from "@/utils";
+import { Request, Response, NextFunction } from "express";
 
-export const signupController: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
+export const signupController = asyncHandler(
+  async (req: Request, res: Response, _next: NextFunction) => {
     const result = await Signup(req.body);
-    if (result instanceof Error) {
-      res.status(400).json({ error: result.message });
-    } else {
-      res.status(201).json(result);
-    }
-  } catch (error) {
-    next(error); // Pasa el error al middleware de manejo de errores
-  }
-};
 
-export const signingController: RequestHandler = async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
- 
-}
+    if (result instanceof Error) {
+      throw setError(400, result.message);
+    }
+
+    res.status(201).json(result);
+  }
+);
+
+export const signingController = asyncHandler(
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+    const result = await Signin(req.body);
+
+    if (result instanceof Error) {
+      throw setError(400, result.message);
+    }
+
+    res.status(201).json(result);
+  }
+);
